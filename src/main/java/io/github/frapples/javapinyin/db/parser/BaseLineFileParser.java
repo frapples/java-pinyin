@@ -24,14 +24,18 @@ public abstract class BaseLineFileParser implements Iterable<Item> {
     public Iterator<Item> iterator() {
         return new Iterator<Item>() {
             @Override
-            public boolean hasNext() {
-                next = readNext();
+            public boolean hasNext() { // hashNext应保证幂等性
+                if (next == null) {
+                    next = readNext();
+                }
                 return next != null;
             }
 
             @Override
             public Item next() {
-                return next;
+                Item c = next;
+                next = null;
+                return c;
             }
 
             @Override

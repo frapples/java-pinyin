@@ -1,6 +1,9 @@
 package io.github.frapples.javapinyin.db;
 
+import com.google.common.base.Supplier;
+import com.google.common.collect.Iterators;
 import io.github.frapples.javapinyin.api.exception.JavaPinyinException;
+import io.github.frapples.javapinyin.db.cache.MemoryCache;
 import io.github.frapples.javapinyin.db.parser.Item;
 import io.github.frapples.javapinyin.db.parser.CharFileParser;
 import io.github.frapples.javapinyin.db.parser.WordFileParser;
@@ -8,9 +11,8 @@ import io.github.frapples.javapinyin.utils.FileUtils;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Frapples <isfrapples@outlook.com>
@@ -18,30 +20,25 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Thesaurus {
 
-    private volatile Map<String, Item> cache;
+    private MemoryCache memoryCache = new MemoryCache(new Supplier<Iterator<Item>>() {
+        @Override
+        public Iterator<Item> get() {
+            return loadCharWordFile();
+        }
+    });
 
     public List<String> getPinyin(char chinese) {
-        Item item = this.getCache().get(String.valueOf(chinese));
-        return item == null ? Collections.<String>emptyList(): item.getPinyins();
+        Item item = memoryCache.getCache().get(String.valueOf(chinese));
+        return item == null ? Collections.<String>emptyList() : item.getPinyins();
     }
 
     public List<String> getPinyinForWord(String word) {
-        Item item = this.getCache().get(word);
-        return item == null ? Collections.<String>emptyList(): item.getPinyins();
+        Item item = memoryCache.getCache().get(word);
+        return item == null ? Collections.<String>emptyList() : item.getPinyins();
     }
 
-    private Map<String, Item> getCache() {
-        if (cache == null) {
-            synchronized (this) {
-                if (cache == null) {
-                    this.cache = loadCache();
-                }
-            }
-        }
-        return this.cache;
-    }
 
-    private Map<String, Item> loadCache() {
+    private Iterator<Item> loadCharWordFile() {
         try {
             InputStreamReader inputStreamReader = new InputStreamReader(
                 FileUtils.getResource(Config.CHAR_PINYIN_FILE_PATH).openStream(), Config.FILE_CHARSET);
@@ -51,15 +48,8 @@ public class Thesaurus {
                 FileUtils.getResource(Config.WORD_PINYIN_FILE_PATH).openStream(), Config.FILE_CHARSET);
             WordFileParser wordFileParser = new WordFileParser(inputStreamReader);
 
-            Map<String, Item> cache = new ConcurrentHashMap<String, Item>();
-            for (Item item : wordFileParser) {
-                cache.put(item.getCharacter(), item);
-            }
-            for (Item item : charFileParser) {
-                cache.put(item.getCharacter(), item);
-            }
-            return cache;
-        } catch(IOException e){
+            return Iterators.concat(charFileParser.iterator(), wordFileParser.iterator());
+        } catch (IOException e) {
             throw new JavaPinyinException(e);
         }
     }
