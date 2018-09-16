@@ -23,6 +23,22 @@ public class JavaPinyin {
         return pinyin.sentenceToPinyin(chinese, style);
     }
 
+    public static List<Character> pinyinToHans(String pinyinStr) {
+        return pinyin.pinyinToHans(pinyinStr);
+    }
+
+    public static List<String> pinyinToWord(List<String> pinyinStr) {
+        return pinyin.pinyinToWord(pinyinStr);
+    }
+
+    public static List<String> pinyinForHans(char hans) {
+        return pinyin.pinyinForHans(hans, Style.TONE);
+    }
+
+    public static List<String> pinyinForHans(char hans, Style style) {
+        return pinyin.pinyinForHans(hans, style);
+    }
+
     public static List<String> pinyinForWord(String word) {
         return pinyin.wordToPinyin(word, Style.TONE);
     }

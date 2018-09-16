@@ -8,6 +8,7 @@ import io.github.frapples.javapinyin.db.dal.MemoryThesaurus;
 import io.github.frapples.javapinyin.db.dal.SqliteThesaurus;
 import io.github.frapples.javapinyin.query.style.Converter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -37,6 +38,10 @@ public class Pinyin {
         return stylify(result, style);
     }
 
+    public List<Character> pinyinToHans(String pinyin) {
+        return thesaurus.getHansForPinyin(pinyin);
+    }
+
     private List<String> stylify(List<String> s, Style style) {
         final Converter converter = GuiceContext.getBean(style.getConverter());
         return Lists.transform(s, new Function<String, String>() {
@@ -45,5 +50,14 @@ public class Pinyin {
                 return converter.convert(input);
             }
         });
+    }
+
+    public List<String> pinyinToWord(List<String> pinyin) {
+        return thesaurus.getWordForPinyin(pinyin);
+    }
+
+    public List<String> pinyinForHans(char hans, Style style) {
+        List<String> result = thesaurus.getPinyinForChar(hans);
+        return stylify(result, style);
     }
 }

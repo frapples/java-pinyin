@@ -1,6 +1,9 @@
 package io.github.frapples.javapinyin.db.dal;
 
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
+import com.google.common.collect.Lists;
 import io.github.frapples.javapinyin.api.exception.JavaPinyinException;
 import io.github.frapples.javapinyin.db.Config;
 import java.sql.Connection;
@@ -40,6 +43,22 @@ public class SqliteThesaurus implements Thesaurus {
         }
     }
 
+    @Override
+    public List<Character> getHansForPinyin(String pinyin) {
+        List<String> result = selectByPinyin(pinyin);
+        return Lists.transform(result, new Function<String, Character>() {
+            @Override
+            public Character apply(String input) {
+                return input.charAt(0);
+            }
+        });
+    }
+
+    @Override
+    public List<String> getWordForPinyin(List<String> pinyin) {
+        return selectByPinyin(Joiner.on(" ").join(pinyin));
+    }
+
     private List<String> selectByHans(String hans) {
         try {
             PreparedStatement stmt = conn.prepareStatement(
@@ -58,4 +77,24 @@ public class SqliteThesaurus implements Thesaurus {
             throw new JavaPinyinException(e);
         }
     }
+
+    private List<String> selectByPinyin(String pinyin) {
+        try {
+            PreparedStatement stmt = conn.prepareStatement(
+                "SELECT hans FROM pinyin_thesaurus WHERE pinyin_non_tone = ?;");
+            stmt.setString(1, pinyin);
+            ResultSet rs = stmt.executeQuery();
+
+            List<String> result = new ArrayList<String>();
+            while (rs.next()) {
+                String hans = rs.getString("hans");
+                result.add(hans);
+            }
+            stmt.close();
+            return result;
+        } catch (SQLException e) {
+            throw new JavaPinyinException(e);
+        }
+    }
+
 }

@@ -11,4 +11,8 @@ public interface Thesaurus {
     List<String> getPinyinForChar(char chinese);
 
     List<String> getPinyinForWord(String word);
+
+    List<Character> getHansForPinyin(String pinyin);
+
+    List<String> getWordForPinyin(List<String> pinyin);
 }

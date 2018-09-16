@@ -32,5 +32,15 @@ public class MemoryThesaurus implements Thesaurus {
         return item == null ? Collections.<String>emptyList() : item.getPinyins();
     }
 
+    @Override
+    public List<Character> getHansForPinyin(String pinyin) {
+        return null;
+    }
+
+    @Override
+    public List<String> getWordForPinyin(List<String> pinyin) {
+        return null;
+    }
+
 
 }
