@@ -4,9 +4,7 @@ import com.google.common.base.Supplier;
 import io.github.frapples.javapinyin.db.parser.Item;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * @author Frapples <isfrapples@outlook.com>

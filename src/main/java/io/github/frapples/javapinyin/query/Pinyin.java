@@ -4,7 +4,8 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import io.github.frapples.javapinyin.api.GuiceContext;
 import io.github.frapples.javapinyin.api.constants.Style;
-import io.github.frapples.javapinyin.db.Thesaurus;
+import io.github.frapples.javapinyin.db.dal.MemoryThesaurus;
+import io.github.frapples.javapinyin.db.dal.SqliteThesaurus;
 import io.github.frapples.javapinyin.query.style.Converter;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import javax.inject.Inject;
 public class Pinyin {
 
     @Inject
-    private Thesaurus thesaurus;
+    private SqliteThesaurus thesaurus;
 
 
     public List<List<String>> sentenceToPinyin(String chinese, Style style) {
