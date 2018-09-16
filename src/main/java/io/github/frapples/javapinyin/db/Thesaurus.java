@@ -1,7 +1,8 @@
 package io.github.frapples.javapinyin.db;
 
 import io.github.frapples.javapinyin.api.exception.JavaPinyinException;
-import io.github.frapples.javapinyin.db.TextFileParser.Item;
+import io.github.frapples.javapinyin.db.parser.Item;
+import io.github.frapples.javapinyin.db.parser.CharFileParser;
 import io.github.frapples.javapinyin.utils.FileUtils;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -37,11 +38,11 @@ public class Thesaurus {
     private Map<String, Item> loadCache() {
         try {
             InputStreamReader inputStreamReader = new InputStreamReader(
-                FileUtils.getResource(Config.PINYIN_FILE_PATH).openStream(), "UTF-8");
-            TextFileParser textFileParser = new TextFileParser(inputStreamReader);
+                FileUtils.getResource(Config.CHAR_PINYIN_FILE_PATH).openStream(), "UTF-8");
+            CharFileParser charFileParser = new CharFileParser(inputStreamReader);
 
             Map<String, Item> cache = new ConcurrentHashMap<String, Item>();
-            for (Item item : textFileParser) {
+            for (Item item : charFileParser) {
                 cache.put(item.getCharacter(), item);
             }
             return cache;

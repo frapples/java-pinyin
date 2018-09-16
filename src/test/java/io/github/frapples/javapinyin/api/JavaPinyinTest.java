@@ -1,6 +1,5 @@
 package io.github.frapples.javapinyin.api;
 
-import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -10,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class JavaPinyinTest {
 
     @Test
-    void chineseToPinyin() throws IOException {
+    void chineseToPinyin() {
         System.out.println(JavaPinyin.chineseToPinyin("中心"));
     }
 }
