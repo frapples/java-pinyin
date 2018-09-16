@@ -1,30 +1,33 @@
 package io.github.frapples.javapinyin.api;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import io.github.frapples.javapinyin.db.Thesaurus;
-import java.util.ArrayList;
+import io.github.frapples.javapinyin.api.constants.Style;
+import io.github.frapples.javapinyin.query.Pinyin;
 import java.util.List;
 
 /**
  * @author Frapples <isfrapples@outlook.com>
  * @date 18-9-16
+ *
+ * This is a facade class of the library.
  */
 public class JavaPinyin {
 
-    private static Injector injector = Guice.createInjector();
-    private static Thesaurus thesaurus = injector.getInstance(Thesaurus.class);
+    private static Pinyin pinyin = GuiceContext.getBean(Pinyin.class);
 
-    public static List<List<String>> chineseToPinyin(String chinese) {
-
-        List<List<String>> result = new ArrayList<List<String>>();
-        for (char c : chinese.toCharArray()) {
-            result.add(thesaurus.getPinyin(c));
-        }
-        return result;
+    public static List<List<String>> pinyin(String chinese) {
+        // TODO 分词算法
+        return pinyin.sentenceToPinyin(chinese, Style.TONE);
     }
 
-    public static List<String> chineseWordToPinyin(String word) {
-        return thesaurus.getPinyinForWord(word);
+    public static List<List<String>> pinyin(String chinese, Style style) {
+        return pinyin.sentenceToPinyin(chinese, style);
+    }
+
+    public static List<String> pinyinForWord(String word) {
+        return pinyin.wordToPinyin(word, Style.TONE);
+    }
+
+    public static List<String> pinyinForWord(String word, Style style) {
+        return pinyin.wordToPinyin(word, style);
     }
 }

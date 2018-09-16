@@ -1,5 +1,7 @@
 package io.github.frapples.javapinyin.api;
 
+import io.github.frapples.javapinyin.api.constants.Style;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -9,12 +11,14 @@ import org.junit.jupiter.api.Test;
 class JavaPinyinTest {
 
     @Test
-    void chineseToPinyin() {
-        System.out.println(JavaPinyin.chineseToPinyin("中心"));
+    void chineseToPinyin() throws InterruptedException {
+        List<List<String>> result = JavaPinyin.pinyin("中心", Style.TONE3);
+        System.out.println(result);
     }
 
     @Test
     void chineseToPinyinForWord() {
-        System.out.println(JavaPinyin.chineseWordToPinyin("一举两得"));
+        List<String> result = JavaPinyin.pinyinForWord("一举两得",Style.TONE2);
+        System.out.println(result);
     }
 }

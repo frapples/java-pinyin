@@ -27,7 +27,7 @@ public class Thesaurus {
         }
     });
 
-    public List<String> getPinyin(char chinese) {
+    public List<String> getPinyinForChar(char chinese) {
         Item item = memoryCache.getCache().get(String.valueOf(chinese));
         return item == null ? Collections.<String>emptyList() : item.getPinyins();
     }
