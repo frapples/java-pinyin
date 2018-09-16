@@ -23,4 +23,8 @@ public class JavaPinyin {
         }
         return result;
     }
+
+    public static List<String> chineseWordToPinyin(String word) {
+        return thesaurus.getPinyinForWord(word);
+    }
 }

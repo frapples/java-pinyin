@@ -12,4 +12,9 @@ class JavaPinyinTest {
     void chineseToPinyin() {
         System.out.println(JavaPinyin.chineseToPinyin("中心"));
     }
+
+    @Test
+    void chineseToPinyinForWord() {
+        System.out.println(JavaPinyin.chineseWordToPinyin("一举两得"));
+    }
 }
