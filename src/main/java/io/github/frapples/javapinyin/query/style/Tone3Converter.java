@@ -13,10 +13,6 @@ public class Tone3Converter implements Converter {
     @Inject
     private Tone2Converter tone2Converter;
 
-    public Tone3Converter() {
-        System.out.println("tewst");
-    }
-
     @Override
     public String convert(String pinyin) {
         pinyin = tone2Converter.convert(pinyin);

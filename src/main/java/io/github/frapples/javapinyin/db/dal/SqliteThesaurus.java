@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 import com.google.inject.Singleton;
 import io.github.frapples.javapinyin.api.exception.JavaPinyinException;
 import io.github.frapples.javapinyin.db.Config;
+import io.github.frapples.javapinyin.utils.ConnectionExtDecorator;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,11 +24,10 @@ import java.util.List;
 @Singleton
 public class SqliteThesaurus implements Thesaurus {
 
-    private Connection conn;
+    private ConnectionExtDecorator connection;
 
     public SqliteThesaurus() throws ClassNotFoundException, SQLException {
-        Class.forName("org.sqlite.JDBC");
-        conn = DriverManager.getConnection("jdbc:sqlite::resource:" + Config.SQLITE_INDEX_FILE_PATH);
+        this.connection = ConnectionExtDecorator.connect("jdbc:sqlite::resource:" + Config.SQLITE_INDEX_FILE_PATH);
     }
 
     @Override
@@ -63,17 +63,14 @@ public class SqliteThesaurus implements Thesaurus {
 
     private List<String> selectByHans(String hans) {
         try {
-            PreparedStatement stmt = conn.prepareStatement(
-                "SELECT pinyin FROM pinyin_thesaurus WHERE hans = ?;");
-            stmt.setString(1, hans);
-            ResultSet rs = stmt.executeQuery();
-
+            ResultSet rs = connection.query(
+                "SELECT pinyin FROM pinyin_thesaurus WHERE hans = ?;",
+                hans);
             List<String> result = new ArrayList<String>();
             while (rs.next()) {
                 String pinyin = rs.getString("pinyin");
                 result.add(pinyin);
             }
-            stmt.close();
             return result;
         } catch (SQLException e) {
             throw new JavaPinyinException(e);
@@ -82,17 +79,13 @@ public class SqliteThesaurus implements Thesaurus {
 
     private List<String> selectByPinyin(String pinyin) {
         try {
-            PreparedStatement stmt = conn.prepareStatement(
-                "SELECT hans FROM pinyin_thesaurus WHERE pinyin_non_tone = ?;");
-            stmt.setString(1, pinyin);
-            ResultSet rs = stmt.executeQuery();
-
+            ResultSet rs = connection.query("SELECT hans FROM pinyin_thesaurus WHERE pinyin_non_tone = ?;",
+                pinyin);
             List<String> result = new ArrayList<String>();
             while (rs.next()) {
                 String hans = rs.getString("hans");
                 result.add(hans);
             }
-            stmt.close();
             return result;
         } catch (SQLException e) {
             throw new JavaPinyinException(e);
