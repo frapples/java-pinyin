@@ -1,15 +1,21 @@
 package io.github.frapples.javapinyin.query.style;
 
+import com.google.inject.Singleton;
 import javax.inject.Inject;
 
 /**
  * @author Frapples <isfrapples@outlook.com>
  * @date 18-9-16
  */
+@Singleton
 public class Tone3Converter implements Converter {
 
     @Inject
     private Tone2Converter tone2Converter;
+
+    public Tone3Converter() {
+        System.out.println("tewst");
+    }
 
     @Override
     public String convert(String pinyin) {

@@ -1,6 +1,7 @@
 package io.github.frapples.javapinyin.db.dal;
 
 import com.google.common.collect.Iterators;
+import com.google.inject.Singleton;
 import io.github.frapples.javapinyin.api.exception.JavaPinyinException;
 import io.github.frapples.javapinyin.db.Config;
 import io.github.frapples.javapinyin.db.parser.CharFileParser;
@@ -16,6 +17,7 @@ import java.util.List;
  * @author Frapples <isfrapples@outlook.com>
  * @date 18-9-16
  */
+@Singleton
 public class LineFileThesaurus implements Thesaurus {
 
     @Override

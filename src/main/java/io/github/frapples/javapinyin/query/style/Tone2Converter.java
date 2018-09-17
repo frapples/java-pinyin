@@ -1,5 +1,6 @@
 package io.github.frapples.javapinyin.query.style;
 
+import com.google.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import java.util.Map;
  * @author Frapples <isfrapples@outlook.com>
  * @date 18-9-16
  */
+@Singleton
 public class Tone2Converter implements Converter {
 
     private final Map<Character, String> symbolTable = new HashMap<Character, String>() {{

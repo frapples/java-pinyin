@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
+import com.google.inject.Singleton;
 import io.github.frapples.javapinyin.api.exception.JavaPinyinException;
 import io.github.frapples.javapinyin.db.Config;
 import java.sql.Connection;
@@ -19,6 +20,7 @@ import java.util.List;
  * @author Frapples <isfrapples@outlook.com>
  * @date 18-9-16
  */
+@Singleton
 public class SqliteThesaurus implements Thesaurus {
 
     private Connection conn;

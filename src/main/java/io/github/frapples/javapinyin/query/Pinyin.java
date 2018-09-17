@@ -2,13 +2,12 @@ package io.github.frapples.javapinyin.query;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import com.google.inject.Singleton;
 import io.github.frapples.javapinyin.api.GuiceContext;
 import io.github.frapples.javapinyin.api.constants.Style;
-import io.github.frapples.javapinyin.db.dal.MemoryThesaurus;
-import io.github.frapples.javapinyin.db.dal.SqliteThesaurus;
+import io.github.frapples.javapinyin.db.dal.Thesaurus;
 import io.github.frapples.javapinyin.query.style.Converter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -16,10 +15,11 @@ import javax.inject.Inject;
  * @author Frapples <isfrapples@outlook.com>
  * @date 18-9-16
  */
+@Singleton
 public class Pinyin {
 
     @Inject
-    private SqliteThesaurus thesaurus;
+    private Thesaurus thesaurus;
 
 
     public List<List<String>> sentenceToPinyin(String chinese, Style style) {

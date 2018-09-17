@@ -1,11 +1,13 @@
 package io.github.frapples.javapinyin.query.style;
 
+import com.google.inject.Singleton;
 import javax.inject.Inject;
 
 /**
  * @author Frapples <isfrapples@outlook.com>
  * @date 18-9-16
  */
+@Singleton
 public class NormalConverter implements Converter {
 
     @Inject
