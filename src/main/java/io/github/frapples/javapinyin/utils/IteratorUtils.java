@@ -17,8 +17,16 @@ public class IteratorUtils {
     }
     public static EndOfIteratorException END_OF_ITERATOR_EXCEPTION = new EndOfIteratorException();
 
+    private static Iterator EMPTY_ITERATOR = new EmptyIterator();
+
+
     public static <T> Iterator<T> create(Supplier<T> nextFunc) {
         return new ReadOnlyIterator<T>(nextFunc);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> Iterator<T> emptyIterator() {
+        return (Iterator<T>)EMPTY_ITERATOR;
     }
 
 
@@ -56,6 +64,24 @@ public class IteratorUtils {
         public void remove() {
             throw new UnsupportedOperationException();
         }
-    };
+    }
+
+    private static class EmptyIterator implements Iterator {
+
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
+
+        @Override
+        public Object next() {
+            return null;
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
 
 }
