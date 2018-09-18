@@ -44,4 +44,10 @@ class JavaPinyinTest {
         result = JavaPinyin.pinyinForHans('中', Style.TONE3);
         System.out.println(result);
     }
+
+    @Test
+    void pinyin() {
+        List<List<String>> result = JavaPinyin.pinyin("中文自动分词指的是使用计算机自动对中文文本进行词语的切分");
+        System.out.println(result);
+    }
 }

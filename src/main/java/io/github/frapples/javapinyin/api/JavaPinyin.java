@@ -15,12 +15,15 @@ public class JavaPinyin {
     private static Pinyin pinyin = GuiceContext.getBean(Pinyin.class);
 
     public static List<List<String>> pinyin(String chinese) {
-        // TODO 分词算法
-        return pinyin.sentenceToPinyin(chinese, Style.TONE);
+        return pinyin(chinese, Style.TONE, false);
     }
 
     public static List<List<String>> pinyin(String chinese, Style style) {
-        return pinyin.sentenceToPinyin(chinese, style);
+        return pinyin(chinese, style, false);
+    }
+
+    public static List<List<String>> pinyin(String chinese, Style style, boolean heteronym) {
+        return pinyin.sentenceToPinyin(chinese, style, heteronym);
     }
 
     public static List<Character> pinyinToHans(String pinyinStr) {

@@ -13,7 +13,7 @@ public class ChineseSegmenter implements Segmenter {
 
     private Segmenter segmenter;
 
-    ChineseSegmenter(Segment segment) {
+    public ChineseSegmenter(Segment segment) {
         segmenter = GuiceContext.getBean(segment.getSegmenterClass());
     }
 
