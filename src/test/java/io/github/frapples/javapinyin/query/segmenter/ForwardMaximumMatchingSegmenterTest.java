@@ -2,6 +2,8 @@ package io.github.frapples.javapinyin.query.segmenter;
 
 import com.google.common.collect.Iterators;
 import io.github.frapples.javapinyin.api.GuiceContext;
+import io.github.frapples.javapinyin.utils.FileUtils;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 import org.junit.jupiter.api.Test;
@@ -20,5 +22,15 @@ class ForwardMaximumMatchingSegmenterTest {
         Iterator<String> result = chineseSentenceBreaker.cut(sentence);
         String[] arr = Iterators.toArray(result, String.class);
         System.out.println(Arrays.toString(arr));
+    }
+
+    @Test
+    void cutArticle() throws IOException {
+        String sentence = FileUtils.getResourceContext("testarticles/kite.txt");
+        System.out.println(sentence.length());
+        Iterator<String> result = chineseSentenceBreaker.cut(sentence);
+        String[] arr = Iterators.toArray(result, String.class);
+        System.out.println(Arrays.toString(arr));
+
     }
 }
