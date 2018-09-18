@@ -1,5 +1,6 @@
 package io.github.frapples.javapinyin.db.generation;
 
+import com.google.common.base.Splitter;
 import io.github.frapples.javapinyin.api.GuiceContext;
 import io.github.frapples.javapinyin.db.dal.DbRow;
 import io.github.frapples.javapinyin.db.dal.LineFileThesaurus;
@@ -8,7 +9,9 @@ import io.github.frapples.javapinyin.query.style.NormalConverter;
 import io.github.frapples.javapinyin.utils.ConnectionExtDecorator;
 import io.github.frapples.javapinyin.utils.FileUtils;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Iterator;
 import javax.inject.Inject;
 
@@ -30,7 +33,12 @@ public class SqliteIndexCreator {
         ConnectionExtDecorator conn = null;
         try {
             conn = ConnectionExtDecorator.connect("jdbc:sqlite:" + path);
-            conn.exec(FileUtils.getResourceContext("data/create.sql", "UTF-8"));
+            // 由于bug https://github.com/xerial/sqlite-jdbc/issues/74
+            // 所以要先手动建立sqlite数据库和表，然后执行它插入词库数据
+            String sqls = FileUtils.getResourceContext("data/create.sql", "UTF-8");
+            for (String sql : Splitter.on(";").splitToList(sqls)) {
+                // conn.exec(sql);
+            }
             insertData(conn);
         } finally {
             if (conn != null) {

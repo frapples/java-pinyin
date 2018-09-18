@@ -29,7 +29,7 @@ public class DbRow {
             return Lists.transform(item.getPinyins(), new Function<String, DbRow>() {
                 @Override
                 public DbRow apply(String pinyin) {
-                    return new DbRow(item.getCharacter(), normalConverter.convert(pinyin), pinyin);
+                    return new DbRow(item.getCharacter(), pinyin, normalConverter.convert(pinyin));
                 }
             });
 
@@ -39,10 +39,10 @@ public class DbRow {
                 pinyins.set(i, normalConverter.convert(pinyins.get(i)));
             }
 
-            return Collections.singletonList(
-                new DbRow(item.getCharacter(),
-                    Joiner.on(" ").join(pinyins),
-                    Joiner.on(" ").join(item.getPinyins())));
+            DbRow row = new DbRow(item.getCharacter(),
+                Joiner.on(" ").join(item.getPinyins()),
+                Joiner.on(" ").join(pinyins));
+            return Collections.singletonList(row);
         } else {
             Preconditions.checkArgument(false);
             return Collections.emptyList();
