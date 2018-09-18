@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -24,12 +25,8 @@ public class ConnectionExtDecorator implements Connection {
     public int exec(String sql, Object... args) throws SQLException {
         PreparedStatement st = null;
         try {
-             st = connection.prepareStatement(sql);
-            for (int i = 0; i < args.length; i++) {
-                int parameterIndex = i + 1;
-                Object arg = args[i];
-                st.setObject(parameterIndex, arg);
-            }
+            st = connection.prepareStatement(sql);
+            setPreparedStatementParameter(st, args);
             return st.executeUpdate();
         } finally {
             if (st != null) {
@@ -42,16 +39,35 @@ public class ConnectionExtDecorator implements Connection {
         PreparedStatement st = null;
         try {
             st = connection.prepareStatement( sql);
-            for (int i = 0; i < args.length; i++) {
-                int parameterIndex = i + 1;
-                Object arg = args[i];
-                st.setObject(parameterIndex, arg);
-            }
+            setPreparedStatementParameter(st, args);
             return st.executeQuery();
         } finally {
             if (st != null) {
                 // st.close();
             }
+        }
+    }
+
+    public int queryForCount(String sql, Object... args) throws SQLException {
+        PreparedStatement st = null;
+        try {
+            st = connection.prepareStatement( sql);
+            setPreparedStatementParameter(st, args);
+            ResultSet rs = st.executeQuery();
+            ResultSetMetaData meta = rs.getMetaData();
+            return rs.getInt(meta.getColumnName(1));
+        } finally {
+            if (st != null) {
+                // st.close();
+            }
+        }
+    }
+
+    private void setPreparedStatementParameter(PreparedStatement st, Object[] args) throws SQLException {
+        for (int i = 0; i < args.length; i++) {
+            int parameterIndex = i + 1;
+            Object arg = args[i];
+            st.setObject(parameterIndex, arg);
         }
     }
 

@@ -15,4 +15,6 @@ public interface Thesaurus {
     List<Character> getHansForPinyin(String pinyin);
 
     List<String> getWordForPinyin(List<String> pinyin);
+
+    boolean hasPrefix(String prefix);
 }

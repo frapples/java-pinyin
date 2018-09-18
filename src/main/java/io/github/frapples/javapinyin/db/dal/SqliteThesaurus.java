@@ -8,9 +8,6 @@ import com.google.inject.Singleton;
 import io.github.frapples.javapinyin.api.exception.JavaPinyinException;
 import io.github.frapples.javapinyin.db.Config;
 import io.github.frapples.javapinyin.utils.ConnectionExtDecorator;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -59,6 +56,17 @@ public class SqliteThesaurus implements Thesaurus {
     @Override
     public List<String> getWordForPinyin(List<String> pinyin) {
         return selectByPinyin(Joiner.on(" ").join(pinyin));
+    }
+
+    @Override
+    public boolean hasPrefix(String prefix) {
+        try {
+            String sql = "SELECT count(*) FROM pinyin_thesaurus WHERE hans like ?";
+            String likeCond = prefix + "%";
+            return connection.queryForCount(sql, likeCond) >= 1;
+        } catch (SQLException e) {
+            throw new JavaPinyinException(e);
+        }
     }
 
     private List<String> selectByHans(String hans) {

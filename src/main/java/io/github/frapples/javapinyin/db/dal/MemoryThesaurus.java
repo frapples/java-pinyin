@@ -12,6 +12,7 @@ import io.github.frapples.javapinyin.db.parser.Item;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * @author Frapples <isfrapples@outlook.com>
@@ -58,5 +59,10 @@ public class MemoryThesaurus implements Thesaurus {
                 return input.getCharacter();
             }
         }));
+    }
+
+    @Override
+    public boolean hasPrefix(String prefix) {
+        throw new NotImplementedException();
     }
 }
