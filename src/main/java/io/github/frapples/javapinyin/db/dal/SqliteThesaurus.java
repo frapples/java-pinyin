@@ -25,6 +25,7 @@ public class SqliteThesaurus implements Thesaurus {
 
     public SqliteThesaurus() throws ClassNotFoundException, SQLException {
         this.connection = ConnectionExtDecorator.connect("jdbc:sqlite::resource:" + Config.SQLITE_INDEX_FILE_PATH);
+        this.connection.exec("PRAGMA case_sensitive_like = ON;");
     }
 
     @Override
