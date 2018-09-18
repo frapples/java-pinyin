@@ -30,7 +30,7 @@ public class SqliteIndexCreator {
         ConnectionExtDecorator conn = null;
         try {
             conn = ConnectionExtDecorator.connect("jdbc:sqlite:" + path);
-            conn.query(FileUtils.getResourceContext("data/create.sql", "UTF-8"));
+            conn.exec(FileUtils.getResourceContext("data/create.sql", "UTF-8"));
             insertData(conn);
         } finally {
             if (conn != null) {

@@ -29,3 +29,5 @@ nbdist/
 
 */*.iml
 .java-version
+
+src/main/resources/data/index.sqlite
