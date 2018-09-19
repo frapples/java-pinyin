@@ -4,7 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.inject.Singleton;
 import io.github.frapples.javapinyin.api.GuiceContext;
-import io.github.frapples.javapinyin.api.constants.Segment;
+import io.github.frapples.javapinyin.api.constants.SegmentStrategy;
 import io.github.frapples.javapinyin.api.constants.Style;
 import io.github.frapples.javapinyin.db.dal.Thesaurus;
 import io.github.frapples.javapinyin.query.segmenter.ChineseSegmenter;
@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import javax.inject.Inject;
-import sun.nio.ch.ChannelInputStream;
 
 /**
  * @author Frapples <isfrapples@outlook.com>
@@ -27,7 +26,7 @@ public class Pinyin {
     @Inject
     private Thesaurus thesaurus;
 
-    private Segmenter segmenter = new ChineseSegmenter(Segment.FORWARD_MAXIMUM_MATCHING);
+    private Segmenter segmenter = new ChineseSegmenter(SegmentStrategy.FORWARD_MAXIMUM_MATCHING);
 
     public List<List<String>> sentenceToPinyin(String chinese, Style style, boolean heteronym) {
         List<List<String>> result = new ArrayList<List<String>>();

@@ -1,7 +1,7 @@
 package io.github.frapples.javapinyin.query.segmenter;
 
 import io.github.frapples.javapinyin.api.GuiceContext;
-import io.github.frapples.javapinyin.api.constants.Segment;
+import io.github.frapples.javapinyin.api.constants.SegmentStrategy;
 import java.util.Iterator;
 
 /**
@@ -13,8 +13,8 @@ public class ChineseSegmenter implements Segmenter {
 
     private Segmenter segmenter;
 
-    public ChineseSegmenter(Segment segment) {
-        segmenter = GuiceContext.getBean(segment.getSegmenterClass());
+    public ChineseSegmenter(SegmentStrategy segmentStrategy) {
+        segmenter = GuiceContext.getBean(segmentStrategy.getSegmenterClass());
     }
 
     @Override

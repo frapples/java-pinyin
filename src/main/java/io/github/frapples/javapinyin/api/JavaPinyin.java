@@ -1,7 +1,12 @@
 package io.github.frapples.javapinyin.api;
 
+import com.google.common.collect.Iterators;
+import io.github.frapples.javapinyin.api.constants.SegmentStrategy;
 import io.github.frapples.javapinyin.api.constants.Style;
 import io.github.frapples.javapinyin.query.Pinyin;
+import io.github.frapples.javapinyin.query.segmenter.ChineseSegmenter;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -48,5 +53,22 @@ public class JavaPinyin {
 
     public static List<String> pinyinForWord(String word, Style style) {
         return pinyin.wordToPinyin(word, style);
+    }
+
+    public static List<String> segment(String sentence) {
+        return segment(sentence, SegmentStrategy.FORWARD_MAXIMUM_MATCHING);
+    }
+
+    public static List<String> segment(String sentence, SegmentStrategy segmentStrategy) {
+        Iterator<String> result = new ChineseSegmenter(segmentStrategy).cut(sentence);
+        return Arrays.asList(Iterators.toArray(result, String.class));
+    }
+
+    /**
+     * 由于第一次查询时较慢，因此可以预先调用此函数来进行预加载
+     */
+    public static void init() {
+        //
+        pinyinForWord("中心");
     }
 }

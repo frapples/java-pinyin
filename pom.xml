@@ -17,7 +17,19 @@
           <target>1.6</target>
         </configuration>
       </plugin>
-    </plugins>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.0.2</version>
+          <configuration>
+            <excludes>
+              <exclude>data/phrase-pinyin-data/*</exclude>
+              <exclude>data/pinyin-data/*</exclude>
+            </excludes>
+          </configuration>
+        </plugin>
+      </plugins>
   </build>
 
   <dependencies>
@@ -45,7 +57,7 @@
       <groupId>com.google.guava</groupId>
       <!-- https://github.com/google/guava -->
       <artifactId>guava</artifactId>
-      <version>20.0</version>
+      <version>19.0</version>
     </dependency>
 
     <dependency>

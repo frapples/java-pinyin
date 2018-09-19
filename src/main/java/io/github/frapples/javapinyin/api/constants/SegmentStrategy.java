@@ -10,7 +10,7 @@ import lombok.Getter;
  * @date 2018/9/18
  */
 @AllArgsConstructor
-public enum Segment {
+public enum SegmentStrategy {
 
     FORWARD_MAXIMUM_MATCHING(ForwardMaximumMatchingSegmenter.class);
 
