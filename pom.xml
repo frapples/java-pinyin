@@ -6,7 +6,34 @@
 
   <groupId>io.github.frapples.javapinyin</groupId>
   <artifactId>java-pinyin</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0-alpha-1</version>
+  <name>java-pinyin</name>
+  <description>A library that provides Pinyin and Chinese conversion and Chinese word segmentation.</description>
+  <url>https://github.com/frapples/java-pinyin</url>
+  <scm>
+		<connection>scm:git@github.com:frapples/java-pinyin.git</connection>
+		<developerConnection>scm:git@github.com:frapples/java-pinyin.git</developerConnection>
+		<url>git@github.com:frapples/java-pinyin.git</url>
+	</scm>
+  <developers>
+		<developer>
+			<name>Frapples</name>
+			<email>isfrapples@outlook.com</email>
+		</developer>
+	</developers>
+  <licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<issueManagement>
+		<system>Github Issue</system>
+		<url>https://github.com/frapples/java-pinyin/issues</url>
+	</issueManagement>
+
+
   <build>
     <plugins>
       <plugin>
@@ -67,5 +94,90 @@
     </dependency>
 
   </dependencies>
+
+  <profiles>
+		<profile>
+			<id>release</id>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>oss</id>
+					<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+				</snapshotRepository>
+				<repository>
+					<id>oss</id>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+				</repository>
+			</distributionManagement>
+			<build>
+				<plugins>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<configuration>
+							<source>1.6</source>
+							<target>1.6</target>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jar-plugin</artifactId>
+						<version>3.0.2</version>
+						<configuration>
+							<excludes>
+								<exclude>data/phrase-pinyin-data/*</exclude>
+								<exclude>data/pinyin-data/*</exclude>
+							</excludes>
+						</configuration>
+					</plugin>
+
+					<!-- Source -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>3.0.1</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- Javadoc -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.10.4</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- Gpg Signature -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>

@@ -6,18 +6,18 @@ import com.google.common.base.Supplier;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.Lists;
-import com.google.inject.Singleton;
 import io.github.frapples.javapinyin.db.cache.MemoryCache;
 import io.github.frapples.javapinyin.db.parser.Item;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import javax.inject.Singleton;
 
 /**
  * @author Frapples <isfrapples@outlook.com>
  * @date 18-9-16
  */
+@Singleton
 public class MemoryThesaurus implements Thesaurus {
 
     private MemoryCache memoryCache = new MemoryCache(new Supplier<Iterator<Item>>() {
@@ -63,6 +63,6 @@ public class MemoryThesaurus implements Thesaurus {
 
     @Override
     public boolean hasPrefix(String prefix) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException("Not Implemented");
     }
 }

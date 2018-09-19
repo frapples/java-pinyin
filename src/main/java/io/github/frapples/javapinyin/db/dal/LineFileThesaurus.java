@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.List;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * @author Frapples <isfrapples@outlook.com>
@@ -43,7 +42,7 @@ public class LineFileThesaurus implements Thesaurus {
 
     @Override
     public boolean hasPrefix(String prefix) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException("Not Implemented");
     }
 
     public static Iterator<Item> loadCharWordFile() {

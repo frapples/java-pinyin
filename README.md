@@ -20,7 +20,17 @@
 # 安装及环境要求
 jdk版本要求：jdk >= 1.6
 
-TODO...
+maven配置，pom.xml中添加：
+```xml
+<dependencies>
+  <dependency>
+    <groupId>io.github.frapples.javapinyin</groupId>
+    <artifactId>java-pinyin</artifactId>
+    <version>1.0-alpha-1</version>
+  </dependency>
+</dependencies>
+```
+由于附带词库的原因，因此这个包可能有点大。有可能网络问题出现下载不全的情况，清掉maven缓存再reimport下。
 
 # 使用例子
 ## 单字或词语转换
