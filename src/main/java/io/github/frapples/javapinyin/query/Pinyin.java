@@ -43,9 +43,11 @@ public class Pinyin {
                 String seg = segs.next();
                 if (seg.length() == 1) {
                     List<String> pinyin = thesaurus.getPinyinForChar(seg.charAt(0));
+                    pinyin = stylify(pinyin, style);
                     result.add(Collections.singletonList(pinyin.get(0)));
                 } else if (seg.length() >= 1) {
                     List<String> pinyin = thesaurus.getPinyinForWord(seg);
+                    pinyin = stylify(pinyin, style);
                     for (String p : pinyin) {
                         result.add(Collections.singletonList(p));
                     }
